@@ -1,0 +1,1 @@
+function e(e){const t=Math.abs(Math.ceil(100*e)/100);if(t>=1e9)return`${(t/1e9).toFixed(1)}G`.padStart(5);if(t>=1e6)return`${(t/1e6).toFixed(1)}M`.padStart(5);if(t>=1e3)return`${(t/1e3).toFixed(1)}K`.padStart(5);const r=`${t}`;return r.padStart(6+Math.abs(r.length-3))}export{e as r};

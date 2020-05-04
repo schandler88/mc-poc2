@@ -1,0 +1,1 @@
+System.register([],function(t){"use strict";return{execute:function(){t("r",e);function e(t){var e=Math.abs(Math.ceil(t*100)/100);if(e>=1e9){return((e/1e9).toFixed(1)+"G").padStart(5)}if(e>=1e6){return((e/1e6).toFixed(1)+"M").padStart(5)}if(e>=1e3){return((e/1e3).toFixed(1)+"K").padStart(5)}var r=""+e;return r.padStart(6+Math.abs(r.length-3))}}}});

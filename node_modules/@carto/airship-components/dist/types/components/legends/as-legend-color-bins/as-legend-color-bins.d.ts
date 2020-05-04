@@ -1,0 +1,6 @@
+export declare class LegendColorBins {
+    data: LegendData[];
+    orientation: 'horizontal' | 'vertical';
+    width: number;
+    render(): any;
+}

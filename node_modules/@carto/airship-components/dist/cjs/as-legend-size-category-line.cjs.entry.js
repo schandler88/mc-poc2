@@ -1,0 +1,51 @@
+'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+const core = require('./core-894cddb9.js');
+
+const MIN_WIDTH = 48;
+const FACTOR = 3;
+const LegendSizeBinsPoint = class {
+    constructor(hostRef) {
+        core.registerInstance(this, hostRef);
+        this.orientation = 'vertical';
+        this.aligned = false;
+        this.factor = FACTOR;
+        this.minWidth = MIN_WIDTH;
+    }
+    render() {
+        if (!this.data) {
+            return null;
+        }
+        const classes = {
+            'as-legend-size-category-line--steps': true,
+            [`as-legend-size-category-line--${this.orientation}`]: true
+        };
+        this.maxSize = this.data.slice().sort((first, second) => second.width - first.width)[0].width;
+        return core.h("div", { class: classes }, this.data.map((data) => this.renderStep(data)));
+    }
+    renderStep(data) {
+        const strokeStyle = {
+            borderTopColor: `${data.color}`,
+            borderTopStyle: `${data.strokeStyle || 'solid'}`,
+            borderTopWidth: `${data.width}px`
+        };
+        const lineWidth = Math.max(MIN_WIDTH, this.maxSize * this.factor);
+        const style = Object.assign({ height: `${data.width}px`, width: `${lineWidth}px` }, strokeStyle);
+        const wrapperStyle = {};
+        if (this.orientation === 'horizontal') {
+            wrapperStyle.height = `${lineWidth}px`;
+            if (this.aligned) {
+                style.marginBottom = `${(this.maxSize - data.width) / 2}px`;
+            }
+        }
+        else if (this.orientation === 'vertical') {
+            wrapperStyle.width = `${lineWidth}px`;
+        }
+        return (core.h("div", { class: 'as-legend-size-category-line--step' }, core.h("div", { style: wrapperStyle, class: 'as-legend-size-category-line--line-wrapper' }, core.h("div", { class: 'as-legend-size-category-line--line', style: style })), core.h("span", { class: 'as-legend-size-category-line--label' }, data.label)));
+    }
+    static get style() { return "as-legend-size-category-line{--as-legend-size-category-line--color:var(--as--color--type-01);--as-legend-size-category-line--shadow:rgba(0,0,0,0.1);display:block}as-legend-size-category-line .as-legend-size-category-line--steps{display:-ms-flexbox;display:flex}as-legend-size-category-line .as-legend-size-category-line--line-wrapper,as-legend-size-category-line .as-legend-size-category-line--step{display:-ms-flexbox;display:flex;-ms-flex-align:center;align-items:center}as-legend-size-category-line .as-legend-size-category-line--line-wrapper{-ms-flex-pack:center;justify-content:center}as-legend-size-category-line .as-legend-size-category-line--label{display:-ms-flexbox;display:flex;-ms-flex-align:center;align-items:center;color:var(--as-legend-size-category-line--color);font:var(--as--font--caption);text-transform:capitalize;white-space:nowrap}as-legend-size-category-line .as-legend-size-category-line--horizontal{-ms-flex-direction:row;flex-direction:row;-ms-flex-align:start;align-items:flex-start;-ms-flex-pack:distribute;justify-content:space-around}as-legend-size-category-line .as-legend-size-category-line--horizontal .as-legend-size-category-line--step{-ms-flex-direction:column;flex-direction:column;margin:0 4px}as-legend-size-category-line .as-legend-size-category-line--horizontal .as-legend-size-category-line--step:first-of-type{margin-left:0}as-legend-size-category-line .as-legend-size-category-line--horizontal .as-legend-size-category-line--step:last-of-type{margin-right:0}as-legend-size-category-line .as-legend-size-category-line--horizontal .as-legend-size-category-line--label{margin-top:8px}as-legend-size-category-line .as-legend-size-category-line--horizontal .as-legend-size-category-line--line-wrapper{-ms-flex-align:end;align-items:flex-end}as-legend-size-category-line .as-legend-size-category-line--vertical{-ms-flex-direction:column;flex-direction:column}as-legend-size-category-line .as-legend-size-category-line--vertical .as-legend-size-category-line--label{margin-left:8px}as-legend-size-category-line .as-legend-size-category-line--vertical .as-legend-size-category-line--step:not(:first-of-type){margin-top:8px}"; }
+};
+
+exports.as_legend_size_category_line = LegendSizeBinsPoint;

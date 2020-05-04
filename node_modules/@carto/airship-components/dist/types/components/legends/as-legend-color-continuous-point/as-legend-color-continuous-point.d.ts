@@ -1,0 +1,6 @@
+export declare class LegendColorBinsPoint {
+    data: LegendData[];
+    orientation: 'horizontal' | 'vertical';
+    width: number;
+    render(): any;
+}

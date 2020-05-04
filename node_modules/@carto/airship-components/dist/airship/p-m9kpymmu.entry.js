@@ -1,0 +1,1 @@
+import{r as t,h as s}from"./p-3fce0d94.js";const e=class{constructor(s){t(this,s)}render(){return s("as-legend-category",{data:this.data,orientation:this.orientation,width:this.width})}static get style(){return"as-legend-color-bins-point{display:block}"}};export{e as as_legend_color_bins_point};

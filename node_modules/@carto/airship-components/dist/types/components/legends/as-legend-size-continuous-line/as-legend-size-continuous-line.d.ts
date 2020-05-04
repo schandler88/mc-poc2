@@ -1,0 +1,20 @@
+export declare class LegendSizeContinuousLine {
+    data: LegendData[];
+    orientation: 'horizontal' | 'vertical';
+    size: number;
+    leadingLineStrokeWidth: number;
+    textLineHeight: number;
+    xMarginFactor: number;
+    yMarginFactor: number;
+    width: number;
+    private rSize;
+    componentWillUpdate(): void;
+    componentWillLoad(): void;
+    render(): any;
+    private parseSize;
+    private getSortedData;
+    private getPathStyle;
+    private getSVGStyle;
+    private getSVGViewBox;
+    private getOffset;
+}

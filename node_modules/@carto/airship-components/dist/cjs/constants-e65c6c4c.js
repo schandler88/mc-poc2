@@ -1,0 +1,19 @@
+'use strict';
+
+// This is the default value of --as--color--primary
+const DEFAULT_BAR_COLOR_HEX = '#47DB99';
+// This is the default value of --as--color--complementary
+const DEFAULT_BACKGROUND_BAR_COLOR_HEX = '#E2E6E3';
+const DEFAULT_BAR_COLOR = `var(--as--color--complementary, ${DEFAULT_BAR_COLOR_HEX})`;
+const DEFAULT_BACKGROUND_BAR_COLOR = `var(--as-color--type-03, ${DEFAULT_BACKGROUND_BAR_COLOR_HEX})`;
+const DEFAULT_NUMBER_FORMAT = '%Q';
+const DEFAULT_DATE_FORMAT = '%x';
+const AUTO_FORMAT = 'auto';
+
+exports.AUTO_FORMAT = AUTO_FORMAT;
+exports.DEFAULT_BACKGROUND_BAR_COLOR = DEFAULT_BACKGROUND_BAR_COLOR;
+exports.DEFAULT_BACKGROUND_BAR_COLOR_HEX = DEFAULT_BACKGROUND_BAR_COLOR_HEX;
+exports.DEFAULT_BAR_COLOR = DEFAULT_BAR_COLOR;
+exports.DEFAULT_BAR_COLOR_HEX = DEFAULT_BAR_COLOR_HEX;
+exports.DEFAULT_DATE_FORMAT = DEFAULT_DATE_FORMAT;
+exports.DEFAULT_NUMBER_FORMAT = DEFAULT_NUMBER_FORMAT;

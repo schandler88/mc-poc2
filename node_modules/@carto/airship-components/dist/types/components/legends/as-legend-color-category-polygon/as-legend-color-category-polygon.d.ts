@@ -1,0 +1,6 @@
+export declare class LegendColorCategoryPolygon {
+    data: LegendData[];
+    orientation: 'horizontal' | 'vertical';
+    width: number;
+    render(): any;
+}

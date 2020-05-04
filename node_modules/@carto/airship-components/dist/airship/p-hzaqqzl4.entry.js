@@ -1,0 +1,1 @@
+import{r as t,h as o}from"./p-3fce0d94.js";const s=class{constructor(o){t(this,o)}render(){return o("as-legend-category",{data:this.data,orientation:this.orientation,width:this.width})}static get style(){return"as-legend-color-continuous-point{display:block}"}};export{s as as_legend_color_continuous_point};

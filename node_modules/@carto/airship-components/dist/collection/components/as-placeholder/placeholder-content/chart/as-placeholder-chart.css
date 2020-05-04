@@ -1,0 +1,50 @@
+as-placeholder-chart {
+  display: block;
+  position: relative;
+  height: 150px;
+  min-height: 100%;
+  margin: 16px 0 18px;
+}
+
+.placeholder-chart {
+  display: flex;
+  align-items: flex-end;
+  justify-content: left;
+  height: 100%;
+  padding: 0 10px 6px 30px;
+}
+
+.placeholder-chart__bar {
+  position: relative;
+  height: 100%;
+}
+.placeholder-chart__bar:not(:last-child) {
+  padding-right: 1px;
+}
+.placeholder-chart__bar:first-child::after, .placeholder-chart__bar:nth-child(6n)::after {
+  content: "";
+  position: absolute;
+  bottom: -22px;
+  width: 6px;
+  height: 8px;
+  background-color: var(--as--color--ui-02, #F5F5F5);
+}
+
+.placeholder__vaxis {
+  position: absolute;
+  bottom: 2px;
+  left: 8px;
+}
+
+.vaxis-item {
+  height: 8px;
+  margin-top: 30px;
+  background-color: var(--as--color--ui-02, #F5F5F5);
+}
+.vaxis-item.vaxis-item--y {
+  width: 10px;
+}
+.vaxis-item.vaxis-item--x {
+  width: 6px;
+  margin-left: 4px;
+}

@@ -1,0 +1,1 @@
+const a="#47DB99",s="#E2E6E3",o="var(--as--color--complementary, #47DB99)",r="var(--as-color--type-03, #E2E6E3)",E="%Q",c="%x",e="auto";export{e as A,o as D,r as a,E as b,c,a as d,s as e};

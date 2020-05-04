@@ -1,0 +1,17 @@
+as-layer-selector-slot {
+  display: block;
+}
+as-layer-selector-slot .as-checkbox-layer-slot.as-checkbox-layer-slot--visible {
+  display: block;
+  margin: 12px 0;
+}
+as-layer-selector-slot .as-checkbox-layer-slot.as-checkbox-layer-slot--hidden {
+  display: none;
+}
+as-layer-selector-slot .as-checkbox-layer-slot .as-legend--wrapper {
+  padding: var(--as-legend--padding) 0;
+}
+as-layer-selector-slot .as-layer-selector-slot--wrapper .as-caption {
+  font-size: var(--as--font--subheader);
+  line-height: var(--as--font--subheader);
+}

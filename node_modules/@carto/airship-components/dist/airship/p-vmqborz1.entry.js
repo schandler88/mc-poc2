@@ -1,0 +1,1 @@
+import{r as t,h as e}from"./p-3fce0d94.js";const r=class{constructor(e){t(this,e)}render(){return e("as-legend-category",{data:this.data,orientation:this.orientation,width:this.width})}static get style(){return"as-legend-color-category-line{display:block}"}};export{r as as_legend_color_category_line};

@@ -1,0 +1,1 @@
+System.register([],function(n){"use strict";return{execute:function(){n("b",e);function e(n){return["none","initial","inherit","hidden","unset"].indexOf(n)===-1}}}});

@@ -1,0 +1,1 @@
+System.register([],function(e){"use strict";return{execute:function(){e("r",r);function r(e){var r=e.querySelectorAll("*");for(var t=0,a=r;t<a.length;t++){var n=a[t];var o=n.tagName.toLowerCase().indexOf("as-")===0&&n.forceUpdate;if(o){n.forceUpdate()}}}}}});

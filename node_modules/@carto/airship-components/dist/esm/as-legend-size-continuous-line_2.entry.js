@@ -1,0 +1,197 @@
+import { r as registerInstance, h } from './core-a69618da.js';
+import { b as borderStyleCounts } from './border-style-counts-8a3a8717.js';
+
+const TEXT_MARGIN = 4;
+const MIN_LINE_SIZE = 4;
+const LegendSizeContinuousLine = class {
+    constructor(hostRef) {
+        registerInstance(this, hostRef);
+        this.data = null;
+        this.orientation = 'vertical';
+        this.size = 300;
+        this.leadingLineStrokeWidth = 0.5;
+        // Line height of the font, which is 12 with the original as-caption
+        this.textLineHeight = 12;
+        this.xMarginFactor = 0.1;
+        this.yMarginFactor = 0.1;
+        this.width = null;
+        this.rSize = 0;
+    }
+    componentWillUpdate() {
+        this.parseSize();
+    }
+    componentWillLoad() {
+        this.parseSize();
+    }
+    render() {
+        if (!this.data || this.data.length === 0) {
+            return;
+        }
+        const sortedData = this.getSortedData();
+        const MAX = sortedData[0].width;
+        const HALF = MAX / 2;
+        const X_POS = Math.max(MAX + MIN_LINE_SIZE, this.width);
+        const X_OFFSET = this.orientation === 'horizontal' || this.width === null
+            ? 0
+            : (this.width - MAX) / 2;
+        // Path is painted counterclockwise starting from bottom left point
+        const realPath = [];
+        const lines = [];
+        sortedData.forEach((d, i) => {
+            const FACTOR = HALF * (d.width / MAX);
+            const Y_RATIO = i / (sortedData.length - 1);
+            const TOP_X = HALF + FACTOR;
+            const BOTTOM_X = HALF - FACTOR;
+            const BOTTOM_Y = this.size - (this.size * Y_RATIO);
+            const TOP_Y = BOTTOM_Y;
+            const TOP = this.orientation === 'vertical'
+                ? [TOP_X + X_OFFSET, TOP_Y]
+                : [TOP_Y + X_OFFSET, TOP_X];
+            const BOTTOM = this.orientation === 'vertical'
+                ? [BOTTOM_X + X_OFFSET, BOTTOM_Y]
+                : [TOP_Y + X_OFFSET, BOTTOM_X];
+            // Insert always at current index
+            realPath.splice(i, 0, `L${TOP.join(' ')}`);
+            // Insert just before the last element
+            realPath.splice(realPath.length - i, 0, `L${BOTTOM.join(' ')}`);
+            if (d.label) {
+                const Y_OFFSET = this.getOffset(i, sortedData.length - 1);
+                const X = HALF + FACTOR;
+                const Y = this.size - (this.size * Y_RATIO) + Y_OFFSET;
+                const first = [X, Y];
+                const second = [X_POS, Y];
+                if (this.orientation === 'horizontal') {
+                    first.reverse();
+                    second.reverse();
+                }
+                first[0] += X_OFFSET;
+                second[0] += X_OFFSET;
+                lines.push({
+                    label: d.label,
+                    x1: first[0],
+                    x2: second[0],
+                    y1: first[1],
+                    y2: second[1]
+                });
+            }
+        });
+        if (this.orientation === 'horizontal') {
+            realPath.splice(0, 0, `M${this.size} 0`);
+        }
+        else {
+            realPath.splice(0, 0, `M0 ${this.size}`);
+        }
+        const classes = {
+            [`as-legend-size-continuous-line--${this.orientation}`]: true
+        };
+        return h("svg", { class: classes, style: this.getSVGStyle(), viewBox: this.getSVGViewBox() }, h("g", null, h("path", { style: this.getPathStyle(), d: realPath.join(' ') + ' Z' }), h("g", null, lines.map(({ x1, x2, y1, y2 }) => {
+            let xOff = -X_OFFSET;
+            if (this.orientation === 'horizontal') {
+                xOff = 0;
+            }
+            return (h("line", { "stroke-width": this.leadingLineStrokeWidth, x1: x1, y1: y1, x2: x2 + xOff, y2: y2 }));
+        })), h("g", null, lines.map(({ label, x2, y2 }) => {
+            const offset = {
+                x: TEXT_MARGIN - X_OFFSET,
+                y: this.textLineHeight / 4
+            };
+            if (this.orientation === 'horizontal') {
+                offset.x = 0;
+                offset.y = this.textLineHeight;
+            }
+            return [
+                h("text", { x: x2 + offset.x, y: y2 + offset.y }, label)
+            ];
+        }))));
+    }
+    parseSize() {
+        if (!this.data || this.data.length === 0) {
+            return;
+        }
+        const sortedData = this.getSortedData();
+        const max = sortedData[0].width;
+        this.rSize = Math.max(max + MIN_LINE_SIZE + (this.textLineHeight), 0);
+    }
+    getSortedData() {
+        if (this.data === null) {
+            return this.data;
+        }
+        return this.data.slice().sort((first, second) => second.width - first.width);
+    }
+    getPathStyle() {
+        return {
+            fill: `${this.data[0].color}`
+        };
+    }
+    getSVGStyle() {
+        const height = (this.orientation === 'horizontal' ? this.rSize : this.size);
+        return {
+            height: `${height * (1 + this.yMarginFactor)}px`,
+            width: `${this.size * (1 + this.xMarginFactor)}px`
+        };
+    }
+    getSVGViewBox() {
+        const height = (this.orientation === 'horizontal' ? this.rSize : this.size);
+        let marginX = this.size * (-this.xMarginFactor / 2);
+        const marginY = height * (-this.yMarginFactor / 2);
+        if (this.orientation === 'vertical') {
+            marginX = 0;
+        }
+        return `${marginX} ${marginY} ${this.size * (1 + this.xMarginFactor)} ${height * (1 + this.yMarginFactor)}`;
+    }
+    getOffset(index, length) {
+        let offset = 0;
+        if (index === length) {
+            offset += this.leadingLineStrokeWidth;
+        }
+        if (index === 0) {
+            offset -= this.leadingLineStrokeWidth;
+        }
+        return offset;
+    }
+    static get style() { return "as-legend-size-continuous-line{display:block;overflow:hidden}as-legend-size-continuous-line svg text{font:var(--as--font--caption)}as-legend-size-continuous-line svg line{stroke:var(--as-legend--color)}as-legend-size-continuous-line svg.as-legend-size-continuous-line--horizontal text{text-anchor:middle}"; }
+};
+
+// This component ignores the strokeWidth property, and always paints
+// a 1px border.
+const FAKE_BORDER_SIZE = 1;
+const LegendSizeContinuousPoint = class {
+    constructor(hostRef) {
+        registerInstance(this, hostRef);
+        this.orientation = 'vertical';
+        this.scale = 1;
+    }
+    render() {
+        if (!this.data) {
+            return null;
+        }
+        const classes = {
+            'as-legend-size-continuous-point--wrapper': true,
+            [`as-legend-size-continuous-point--${this.orientation}`]: true
+        };
+        const sortedData = this.data.slice().sort((first, second) => second.width - first.width);
+        this.maxSize = sortedData[0].width * this.scale;
+        const size = {
+            height: `${this.maxSize}px`,
+            width: `${this.maxSize}px`
+        };
+        return h("div", { class: classes }, h("span", { class: 'as-legend-size-continuous-point--label' }, sortedData[sortedData.length - 1].label), h("div", { style: size, class: 'as-legend-size-continuous-point--steps' }, sortedData.map((data) => this.renderStep(data))), h("span", { class: 'as-legend-size-continuous-point--label' }, sortedData[0].label));
+    }
+    renderStep(data) {
+        const strokeStyle = `${FAKE_BORDER_SIZE}px ${data.strokeStyle || 'solid'} ${data.strokeColor}`;
+        const sizeOffset = borderStyleCounts(data.strokeStyle)
+            ? FAKE_BORDER_SIZE * 2
+            : 0;
+        const size = `${Math.round((data.width + sizeOffset) * this.scale)}px`;
+        const style = {
+            backgroundColor: data.color,
+            border: strokeStyle,
+            height: size,
+            width: size,
+        };
+        return h("div", { class: 'as-legend-size-continuous-point--circle', style: style });
+    }
+    static get style() { return "as-legend-size-continuous-point{--as-legend-size-continuous-point--color:var(--as--color--type-01);--as-legend-size-continuous-point--shadow:rgba(0,0,0,0.1);display:block}as-legend-size-continuous-point .as-legend-size-continuous-point--steps{position:relative;margin:8px}as-legend-size-continuous-point .as-legend-size-continuous-point--steps,as-legend-size-continuous-point .as-legend-size-continuous-point--wrapper{display:-ms-flexbox;display:flex;-ms-flex-align:center;align-items:center}as-legend-size-continuous-point .as-legend-size-continuous-point--circle{position:absolute;border:2px solid var(--as-legend-size-continuous-point--shadow);border-radius:50%;-webkit-box-shadow:0 0 2px 0 var(--as-legend-size-continuous-point--shadow);box-shadow:0 0 2px 0 var(--as-legend-size-continuous-point--shadow)}as-legend-size-continuous-point .as-legend-size-continuous-point--label{color:var(--as-legend-size-continuous-point--color);font:var(--as--font--caption);text-transform:capitalize;white-space:nowrap}as-legend-size-continuous-point .as-legend-size-continuous-point--vertical .as-legend-size-continuous-point--steps,as-legend-size-continuous-point .as-legend-size-continuous-point--vertical.as-legend-size-continuous-point--wrapper{-ms-flex-direction:column-reverse;flex-direction:column-reverse}"; }
+};
+
+export { LegendSizeContinuousLine as as_legend_size_continuous_line, LegendSizeContinuousPoint as as_legend_size_continuous_point };

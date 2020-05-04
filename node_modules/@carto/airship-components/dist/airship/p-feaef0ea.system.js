@@ -1,0 +1,1 @@
+System.register([],function(r){"use strict";return{execute:function(){var a=r("d","#47DB99");var e=r("e","#E2E6E3");var t=r("D","var(--as--color--complementary, "+a+")");var v=r("a","var(--as-color--type-03, "+e+")");var c=r("b","%Q");var o=r("c","%x");var n=r("A","auto")}}});

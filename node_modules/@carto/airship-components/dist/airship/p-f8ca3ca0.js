@@ -1,0 +1,1 @@
+function o(o){const n=o.querySelectorAll("*");for(const o of n)0===o.tagName.toLowerCase().indexOf("as-")&&o.forceUpdate&&o.forceUpdate()}export{o as r};

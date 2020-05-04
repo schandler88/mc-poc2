@@ -1,0 +1,1 @@
+import{r as t,h as o}from"./p-3fce0d94.js";const e=class{constructor(o){t(this,o)}render(){return o("as-legend-category",{data:this.data,orientation:this.orientation,width:this.width})}static get style(){return"as-legend-color-category-polygon{display:block}"}};export{e as as_legend_color_category_polygon};

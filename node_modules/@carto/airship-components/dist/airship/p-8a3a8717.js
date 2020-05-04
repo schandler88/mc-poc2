@@ -1,0 +1,1 @@
+function n(n){return-1===["none","initial","inherit","hidden","unset"].indexOf(n)}export{n as b};
